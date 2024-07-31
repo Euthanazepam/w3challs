@@ -30,8 +30,7 @@ def rsa_decrypt(c: int, d: int, n: int) -> str:
     :return: Decrypted message (text)
     """
 
-    # The key length is 8 bits.
-    decrypted_text = pow(c, d, n).to_bytes(8, 'big').decode()
+    decrypted_text = pow(c, d, n).to_bytes(c.bit_length() // 8, 'big').decode()
 
     return decrypted_text
 
