@@ -1,3 +1,6 @@
+from factordb.factordb import FactorDB
+
+
 def extended_gcd(a: int, b: int) -> int:
     """
     Returns the secret exponent.
@@ -60,8 +63,9 @@ def get_flag() -> str:
     """
 
     # Use http://factordb.com to factorize n
-    p = 27789079547
-    q = 28188776653
+    f = FactorDB(n)
+    f.connect()
+    p, q = f.get_factor_list()
 
     phi = (p - 1) * (q - 1)
     d = extended_gcd(a=e, b=phi)
