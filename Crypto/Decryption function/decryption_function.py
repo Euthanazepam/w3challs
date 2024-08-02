@@ -24,7 +24,9 @@ def function(word: str, a: int, b: int) -> str:
 
 def get_flag() -> str:
     """
-    https://w3challs.com/challenges/crypto/decryption_function
+    Returns the challenge flag https://w3challs.com/challenges/crypto/decryption_function
+
+    :return: Flag
     """
 
     flag = ''
