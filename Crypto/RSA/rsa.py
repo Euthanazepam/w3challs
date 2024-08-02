@@ -1,25 +1,6 @@
 from factordb.factordb import FactorDB
 
 
-def extended_gcd(a: int, b: int) -> int:
-    """
-    Returns the secret exponent.
-
-    :param a: e, public exponent
-    :param b: phi, value of Euler's totient function
-    :return: d, secret exponent
-    """
-
-    # Snatch from https://brilliant.org/wiki/extended-euclidean-algorithm.
-    x, y, u, v = 0, 1, 1, 0
-    while a != 0:
-        q, r = b // a, b % a
-        m, n = x - u * q, y - v * q
-        b, a, x, y, u, v = a, r, u, v, m, n
-
-    return x
-
-
 def rsa_decrypt(c: int, d: int, n: int) -> str:
     """
     Returns the decrypted message.
@@ -37,7 +18,9 @@ def rsa_decrypt(c: int, d: int, n: int) -> str:
 
 def get_flag() -> str:
     """
-    https://w3challs.com/challenges/crypto/rsa
+    Returns the challenge flag https://w3challs.com/challenges/crypto/rsa
+
+    :return: Flag
     """
 
     cipher = [
@@ -67,7 +50,7 @@ def get_flag() -> str:
     p, q = f.get_factor_list()
 
     phi = (p - 1) * (q - 1)
-    d = extended_gcd(a=e, b=phi)
+    d = pow(e, -1, phi)
 
     flag = ''
 
