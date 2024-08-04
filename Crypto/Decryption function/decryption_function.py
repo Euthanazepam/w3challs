@@ -8,7 +8,7 @@ def function(word: str, a: int, b: int) -> str:
 
     :param a: Natural integers lower than 26.
     :param b: Natural integers lower than 26.
-    :param word: Any word of ciphertext.
+    :param word: Any word of plaintext or ciphertext.
     :return: Encrypted or decrypted word.
     """
 
