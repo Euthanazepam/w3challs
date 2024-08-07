@@ -1,13 +1,14 @@
 from string import ascii_lowercase
 
 
-def function(word: str, a: int, b: int) -> str:
+def function(word: str, a: int, b: int, n: int) -> str:
     """
     Returns the result of the function f(x) = ax + b (mod 26)
     This function can be used to encrypt and decrypt a word.
 
     :param a: Natural integers lower than 26.
     :param b: Natural integers lower than 26.
+    :param n: Natural integer, modulus.
     :param word: Any word of plaintext or ciphertext.
     :return: Encrypted or decrypted word.
     """
@@ -16,7 +17,7 @@ def function(word: str, a: int, b: int) -> str:
 
     for w in word:
         word_number = ascii_lowercase.index(w)
-        new_word_number = (((a * word_number) + b) % 26)
+        new_word_number = (((a * word_number) + b) % n)
         string += ascii_lowercase[new_word_number]
 
     return string
@@ -29,17 +30,21 @@ def get_flag() -> str:
     :return: Flag
     """
 
-    flag = ''
-
     # The function f(x) = 21x + 11 is used for encryption
-    encrypt_word = function('GOOGLE'.lower(), 21, 11)
-    encrypted_word = "GELKT".lower()
+    encrypted_word = function("GOOGLE".lower(), 21, 11, 26)
 
-    for i in range(26):
-        for j in range(26):
-            # The word "bravo" was the only human-readable word found in the brute force process.
-            if 'bravo' in function(encrypted_word, i, j):
-                flag = f"{encrypt_word}_{i}y+{j}[26]_{function(encrypted_word, i, j)}"
+    decryption_function = "5y+23[26]"
+
+    # The function g(y) = 5y + 23 is used for decryption
+    decrypted_word = function("GELKT".lower(), 5, 23, 26)
+
+    flag = f"{encrypted_word}_{decryption_function}_{decrypted_word}"
+
+    # Bruteforce
+    # n = 26
+    # for i in range(26):
+    #     for j in range(26):
+    #         print(f"{'GOOGLE'.lower()}_{i}y+{j}[26]_{function('GELKT'.lower(), i, j, n)}")
 
     return flag
 
