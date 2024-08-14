@@ -13,7 +13,7 @@ def function(word: str, a: int, b: int, n: int) -> str:
     :return: Encrypted or decrypted word.
     """
 
-    string = ''
+    string = ""
 
     for w in word:
         word_number = ascii_lowercase.index(w)
@@ -23,6 +23,22 @@ def function(word: str, a: int, b: int, n: int) -> str:
     return string
 
 
+def reverse_function(a: int, b: int, n: int) -> tuple:
+    """
+    Returns the coefficients of the decryption function.
+
+    :param a: Natural integers lower than 26.
+    :param b: Natural integers lower than 26.
+    :param n: Natural integer, modulus.
+    :return: a⁻¹ (mod n), (-b) (mod n)
+    """
+
+    reverse_a = pow(a, -1, n)
+    reverse_b = (reverse_a * (-b)) % n
+
+    return reverse_a, reverse_b
+
+
 def get_flag() -> str:
     """
     Returns the challenge flag https://w3challs.com/challenges/crypto/decryption_function
@@ -30,17 +46,17 @@ def get_flag() -> str:
     :return: Flag
     """
 
-    # The function f(x) = 21x + 11 is used for encryption
     encrypted_word = function("GOOGLE".lower(), 21, 11, 26)
 
-    decryption_function = "5y+23[26]"
+    a, b = reverse_function(21, 11, 26)
+    decryption_function = f"{a}y+{b}[26]"
 
-    # The function g(y) = 5y + 23 is used for decryption
-    decrypted_word = function("GELKT".lower(), 5, 23, 26)
+    decrypted_word = function("GELKT".lower(), a, b, 26)
 
     flag = f"{encrypted_word}_{decryption_function}_{decrypted_word}"
 
-    # Bruteforce
+    # Bruteforce. I'll leave this here just for fun.
+    #
     # n = 26
     # for i in range(26):
     #     for j in range(26):
