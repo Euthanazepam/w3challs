@@ -30,7 +30,7 @@ def reverse_function(a: int, b: int, n: int) -> tuple:
     :param a: Natural integers lower than 26.
     :param b: Natural integers lower than 26.
     :param n: Natural integer, modulus.
-    :return: a⁻¹ (mod n), (-b) (mod n)
+    :return: a⁻¹ (mod n), a⁻¹ * (-b) (mod n)
     """
 
     reverse_a = pow(a, -1, n)
