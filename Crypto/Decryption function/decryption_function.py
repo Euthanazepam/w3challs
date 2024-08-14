@@ -3,11 +3,11 @@ from string import ascii_lowercase
 
 def function(word: str, a: int, b: int, n: int) -> str:
     """
-    Returns the result of the function f(x) = ax + b (mod 26)
+    Returns the result of the function f(x) = ax + b (mod n)
     This function can be used to encrypt and decrypt a word.
 
-    :param a: Natural integers lower than 26.
-    :param b: Natural integers lower than 26.
+    :param a: Natural integers lower than n.
+    :param b: Natural integers lower than n.
     :param n: Natural integer, modulus.
     :param word: Any word of plaintext or ciphertext.
     :return: Encrypted or decrypted word.
@@ -25,10 +25,10 @@ def function(word: str, a: int, b: int, n: int) -> str:
 
 def reverse_function(a: int, b: int, n: int) -> tuple:
     """
-    Returns the coefficients of the decryption function.
+    Returns the coefficients of the decryption function g(y) = a⁻¹ * (y - b) (mod n).
 
-    :param a: Natural integers lower than 26.
-    :param b: Natural integers lower than 26.
+    :param a: Natural integers lower than n.
+    :param b: Natural integers lower than n.
     :param n: Natural integer, modulus.
     :return: a⁻¹ (mod n), a⁻¹ * (-b) (mod n)
     """
