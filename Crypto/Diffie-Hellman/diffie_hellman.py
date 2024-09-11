@@ -31,10 +31,10 @@ def get_flag() -> str:
     """
 
     # All requests must be sent within one session
-    s = requests.Session()
+    session = requests.Session()
 
     # Get the task page
-    response = s.get(f"{base_url}/{path_dh_challenge}")
+    response = session.get(f"{base_url}/{path_dh_challenge}")
 
     # Find the numbers p and g
     match = re.search(r"p =\n(\d+)\n\ng = (\d+)", response.text)
@@ -43,48 +43,46 @@ def get_flag() -> str:
     g = int(match.group(2))
 
     # Get the iframe containing the sniffer
-    response = s.get(f"{base_url}/{path_dh_key}")
+    response = session.get(f"{base_url}/{path_dh_key}")
 
     # Find Alice's public key
     A = int(re.search(r"A = (\d+)", response.text).group(1))
 
     # Send Alice's packet to Bob
     alice_payload = {
-        query_alice:
-        f"""[ --------- w3challs-Sniffer 1.4.7 --------- ]\n\n
+        query_alice: f"""[ --------- w3challs-Sniffer 1.4.7 --------- ]\n\n
         Message from Alice to Bob on 2023/09/03 22:19:07\n\n
         "Hey Bob, if I don't receive your B in about thirty seconds maximum, I'll consider this channel unsafe\n\n
         A = {A}\""""
     }
 
-    response = s.post(url=f"{base_url}/{path_dh_key}?type={query_alice}", data=alice_payload)
+    response = session.post(url=f"{base_url}/{path_dh_key}?type={query_alice}", data=alice_payload)
 
     # Choose any secret key and compute Bob's public key
     b = 5
     B = pow(g, b, p)
 
     # Compute the shared secret key
-    shared_secret = pow(A, b, p)
+    s = pow(A, b, p)
 
     # Send Bob's packet to Alice (she will think that it was Bob who sent her the packet)
     bob_payload = {
-        query_bob:
-        f"""[ --------- w3challs-Sniffer 1.4.7 --------- ]\n\n
+        query_bob: f"""[ --------- w3challs-Sniffer 1.4.7 --------- ]\n\n
         Message from Bob to Alice on 2023/09/03 22:24:15\n\n
         "Hey Alice, here is my B :\n\n
         B = {B}\""""
     }
 
-    response = s.post(url=f"{base_url}/{path_dh_key}?type={query_bob}", data=bob_payload)
+    response = session.post(url=f"{base_url}/{path_dh_key}?type={query_bob}", data=bob_payload)
 
     # Find the encrypted code
     c = int(re.search(r"(\d+)\"", response.text).group(1))
 
     # Compute the password using XOR between the encrypted code and the shared secret key
-    password = c ^ shared_secret
+    password = c ^ s
 
     # Send password to specified URL
-    response = s.get(f"{base_url}/{path_solution}?password={password}")
+    response = session.get(f"{base_url}/{path_solution}?password={password}")
 
     # Find the task flag
     flag = re.findall("W3C{.*}", response.text)
