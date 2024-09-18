@@ -8,12 +8,19 @@ path_solution = "rsa.php"
 def get_flag() -> str:
     """
     Returns the challenge flag https://w3challs.com/challenges/crypto/rsa_server
+    According to http://factordb.com, N is a composite and has no known factors.
+    Use a chosen ciphertext attack (CCA).
+    If c₁ = m₁' mod N and c₂ = m₂' mod N, then c₁ * c₂ mod N = m₁' * m₂' mod N = (m₁ * m₂)' mod N
+
+    Reference:
+        1. Jean-Philippe Aumasson, Serious Cryptograph (2017), p. 279 - Breaking Textbook RSA Encryption’s Malleability,
+        https://palaiologos.rocks/library/Serious%20Cryptography%20Jean-Philippe%20Aumasson.pdf
 
     :return: Flag
     """
 
     # Set headers
-    headers = {'Content-Type': 'application/x-www-form-urlencoded'}
+    headers = {"Content-Type": "application/x-www-form-urlencoded"}
 
     # Get the task page
     response = requests.get(f"{base_url}")
@@ -26,17 +33,6 @@ def get_flag() -> str:
 
     # Find the secret message
     C = int(re.search(r"C :\n(\d+)", response.text).group(1))
-
-    """
-    According to http://factordb.com, N is a composite and has no known factors.
-
-    Use a chosen ciphertext attack (CCA).
-    If c₁ = m₁' mod N and c₂ = m₂' mod N, then c₁ * c₂ mod N = m₁' * m₂' mod N = (m₁ * m₂)' mod N
-    
-    Reference:
-        1. Jean-Philippe Aumasson, Serious Cryptograph (2017), p. 279 - Breaking Textbook RSA Encryption’s Malleability,
-        https://palaiologos.rocks/library/Serious%20Cryptography%20Jean-Philippe%20Aumasson.pdf
-    """
 
     # Encrypt random text
     random_message = int.from_bytes('Shut up and calculate'.encode(), "big")

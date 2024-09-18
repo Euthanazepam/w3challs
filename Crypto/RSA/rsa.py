@@ -20,6 +20,10 @@ def get_flag() -> str:
     """
     Returns the challenge flag https://w3challs.com/challenges/crypto/rsa
 
+    References:
+        1. RSA Decoder — https://www.dcode.fr/rsa-cipher
+        2. FactorDB — http://factordb.com
+
     :return: Flag
     """
 
@@ -37,12 +41,6 @@ def get_flag() -> str:
 
     n = 783340156742833416191
     e = 653
-
-    """
-    References:
-        1. RSA Decoder — https://www.dcode.fr/rsa-cipher
-        2. FactorDB — http://factordb.com
-    """
 
     # Use http://factordb.com to factorize n
     f = FactorDB(n)
