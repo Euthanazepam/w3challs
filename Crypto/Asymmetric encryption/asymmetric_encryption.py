@@ -83,35 +83,35 @@ def get_flag() -> str:
     :return: Flag
     """
 
-    # All requests must be sent within one session
+    # All requests must be sent within one session.
     session = requests.Session()
 
-    # Get the task page
+    # Get the task page.
     response = session.get(f"{base_url}")
 
-    # Find the numbers of the public key: h and f
+    # Find the numbers of the public key: h and f.
     public_key = re.search(r"h = (\d+)\n\nf = (\d+)", response.text)
 
     h = int(public_key.group(1))
     f = int(public_key.group(2))
 
-    # Find the secret message
-    C = int(re.search(r"C : (\d+)", response.text).group(1))
+    # Find the secret message.
+    c = int(re.search(r"C : (\d+)", response.text).group(1))
 
-    # Compute the secret key
+    # Compute the secret key.
     g = pow(f, -1, h)
 
-    # Decrypt encrypted message
-    message = C * g % h
+    # Decrypt encrypted message.
+    message = c * g % h
 
-    # Send message
+    # Send message.
     headers = {"Content-Type": "application/x-www-form-urlencoded"}
 
     payload = f"mess={message}"
 
     response = session.post(url=f"{base_url}/{path_solution}?{query_solution}", headers=headers, data=payload)
 
-    # Find the task flag
+    # Find the task flag.
     flag = re.findall("W3C{.*}", response.text)
 
     return flag[0]

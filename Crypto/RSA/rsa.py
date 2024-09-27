@@ -11,7 +11,7 @@ def rsa_decrypt(c: int, d: int, n: int) -> str:
     :return: Decrypted message (text)
     """
 
-    decrypted_text = pow(c, d, n).to_bytes(c.bit_length() // 8, 'big').decode()
+    decrypted_text = pow(c, d, n).to_bytes(c.bit_length() // 8, "big").decode()
 
     return decrypted_text
 
@@ -42,7 +42,7 @@ def get_flag() -> str:
     n = 783340156742833416191
     e = 653
 
-    # Use http://factordb.com to factorize n
+    # Use http://factordb.com to factorize n.
     f = FactorDB(n)
     f.connect()
     p, q = f.get_factor_list()
@@ -50,7 +50,7 @@ def get_flag() -> str:
     phi = (p - 1) * (q - 1)
     d = pow(e, -1, phi)
 
-    flag = ''
+    flag = ""
 
     for c in cipher:
         flag += rsa_decrypt(c=c, d=d, n=n)

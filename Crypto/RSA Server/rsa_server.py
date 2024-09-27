@@ -19,29 +19,29 @@ def get_flag() -> str:
     :return: Flag
     """
 
-    # Set headers
+    # Set headers.
     headers = {"Content-Type": "application/x-www-form-urlencoded"}
 
-    # Get the task page
+    # Get the task page.
     response = requests.get(f"{base_url}")
 
-    # Find the numbers of the public key: N and e
+    # Find the numbers of the public key: N and e.
     public_key = re.search(r"N \(public module\) :\n(\d+)\n\n\ne \(public exponent\) :\n(\d+)", response.text)
 
-    N = int(public_key.group(1))
+    n = int(public_key.group(1))
     e = int(public_key.group(2))
 
-    # Find the secret message
-    C = int(re.search(r"C :\n(\d+)", response.text).group(1))
+    # Find the secret message.
+    c = int(re.search(r"C :\n(\d+)", response.text).group(1))
 
-    # Encrypt random text
-    random_message = int.from_bytes('Shut up and calculate'.encode(), "big")
-    C2 = pow(random_message, e, N)
+    # Encrypt random text.
+    random_message = int.from_bytes("Shut up and calculate".encode(), "big")
+    c2 = pow(random_message, e, n)
 
-    # Multiply two ciphertexts: C and c2
-    product_of_ciphertexts = (C * C2) % N
+    # Multiply two ciphertexts: c and c2.
+    product_of_ciphertexts = (c * c2) % n
 
-    # Decrypt the product of two ciphertexts
+    # Decrypt the product of two ciphertexts.
     cmd = "DECRYPT"
 
     payload = f"""request=[RSA+Server+--+w3challs+--+1.0]
@@ -57,10 +57,10 @@ def get_flag() -> str:
 
     decrypted_message = int(re.search(r"Decrypted message : (\d+)", response.text).group(1))
 
-    # Compute the plaintext message
-    message = (decrypted_message // random_message) % N
+    # Compute the plaintext message.
+    message = (decrypted_message // random_message) % n
 
-    # Send message to server
+    # Send message to server.
     cmd = "CODE"
 
     payload = f"""request=[RSA+Server+--+w3challs+--+1.0]
@@ -74,7 +74,7 @@ def get_flag() -> str:
 
     response = requests.post(url=f"{base_url}/{path_solution}", headers=headers, data=payload)
 
-    # Find the task flag
+    # Find the task flag.
     flag = re.findall("W3C{.*}", response.text)
 
     return flag[0]
