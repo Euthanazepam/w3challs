@@ -50,7 +50,7 @@ def get_flag() -> str:
     phi = (p - 1) * (q - 1)
     d = pow(e, -1, phi)
 
-    flag = ""
+    flag = ''
 
     for c in cipher:
         flag += rsa_decrypt(c=c, d=d, n=n)
@@ -58,5 +58,5 @@ def get_flag() -> str:
     return flag
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     print(get_flag())

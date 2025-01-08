@@ -13,7 +13,7 @@ def function(word: str, a: int, b: int, n: int) -> str:
     :return: Encrypted or decrypted word.
     """
 
-    string = ""
+    string = ''
 
     for w in word:
         word_number = ascii_lowercase.index(w)
@@ -65,5 +65,5 @@ def get_flag() -> str:
     return flag
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     print(get_flag())
