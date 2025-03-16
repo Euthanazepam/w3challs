@@ -1,5 +1,5 @@
 import re
-import requests
+import requests # pip install requests
 
 base_url = "http://rsa-server.crypto.w3challs.com"
 path_solution = "rsa.php"

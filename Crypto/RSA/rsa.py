@@ -1,4 +1,4 @@
-from factordb.factordb import FactorDB
+from factordb.factordb import FactorDB  # pip install factordb-python
 
 
 def rsa_decrypt(c: int, d: int, n: int) -> str:

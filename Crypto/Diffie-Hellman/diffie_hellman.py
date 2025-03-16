@@ -1,5 +1,5 @@
 import re   # If you have a problem, and you're going to solve it with regular expressions, you now have two problems
-import requests
+import requests # pip install requests
 
 base_url = "http://diffie-hellman.crypto.w3challs.com"
 

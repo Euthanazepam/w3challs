@@ -1,5 +1,5 @@
 import re
-import requests
+import requests # pip install requests
 
 from random import randint
 
