@@ -1,7 +1,11 @@
-import re
-import requests # pip install requests
+#!/usr/bin/env python3
 
+# Standard library imports
+import re
 from random import randint
+
+# Third-party library imports
+import requests # pip install requests
 
 base_url = "http://asymmetric-encryption.crypto.w3challs.com"
 path_solution = "index.php"

@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+
+# Standard library imports
 from string import ascii_lowercase
 
 

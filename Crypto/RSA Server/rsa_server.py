@@ -1,4 +1,9 @@
+#!/usr/bin/env python3
+
+# Standard library imports
 import re
+
+# Third-party library imports
 import requests # pip install requests
 
 base_url = "http://rsa-server.crypto.w3challs.com"

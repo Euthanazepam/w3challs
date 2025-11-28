@@ -1,4 +1,9 @@
-import re   # If you have a problem, and you're going to solve it with regular expressions, you now have two problems
+#!/usr/bin/env python3
+
+# Standard library imports
+import re   # If you have a problem, and you're going to solve it with regular expressions, you now have two problems.
+
+# Third-party library imports
 import requests # pip install requests
 
 base_url = "http://diffie-hellman.crypto.w3challs.com"

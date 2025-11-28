@@ -1,6 +1,11 @@
-#!/bin/bash
-
+#!/usr/bin/env bash
+#
+# Description:
 # This script cracks the password by the hash from the task https://w3challs.com/challenges/crypto/shadow
+#
+# Usage:
+# ./get-flag.sh
+#
 
 DICTIONARY=rockyou.txt
 FILE=shadow

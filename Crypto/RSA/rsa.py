@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+
+# Third-party library imports
 from factordb.factordb import FactorDB  # pip install factordb-python
 
 
